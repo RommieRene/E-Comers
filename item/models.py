@@ -1,6 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
+
+class Cover_Image(models.Model):
+    image = models.ImageField(upload_to='cover_images', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Cover Image'
+        verbose_name_plural = 'Cover Images'
+    
+    def __str__(self):
+        return f"Cover Image {self.id}"
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -24,3 +35,4 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+    

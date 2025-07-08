@@ -1,12 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from .models import Category, Item
+from .models import Category, Item, Cover_Image
 from .forms import NewItemForm, EditItemForm
 from django.contrib.auth.decorators import login_required
 import json
 from django.http import HttpResponse
 from django.http import JsonResponse
 
+def cover_image(request):
+    cover_images = Cover_Image.objects.all()
+    if not cover_images:
+        return render(request, 'item/cover_image.html', {'cover_image': None})
+    else:
+        cover_image = cover_images[0]  # Assuming you want to display the first cover image
+        return render(request, 'item/cover_image.html', {
+            'cover_image': cover_image
+            })
+    
 def browse(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)

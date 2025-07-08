@@ -1,5 +1,5 @@
 from django import forms
-from .models import Item
+from .models import Item                                                                                                                            
 
 INPUT_CLASSES = "w-1/2 py-4 px-6 rounded-xl border bg-white-500 text-black"
 class NewItemForm(forms.ModelForm):

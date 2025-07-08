@@ -1,16 +1,19 @@
 from django.shortcuts import render, redirect
 
-from item.models import Category, Item
+from item.models import Category, Item, Cover_Image
 
 from .forms import SignupForm
 
 def index(request):
     items = Item.objects.filter(is_sold=False)[0:6]
     categories = Category.objects.all()
+    cover_Image = Cover_Image.objects.first()
     
     return render(request, 'core/index.html', {
         'items': items,
-        'categories': categories
+        'categories': categories,
+        'cover_image': cover_Image
+
     })
 
 def contact(request):
