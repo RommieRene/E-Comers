@@ -12,7 +12,7 @@ def cover_image(request):
     if not cover_images:
         return render(request, 'item/cover_image.html', {'cover_image': None})
     else:
-        cover_image = cover_images[0]  # Assuming you want to display the first cover image
+        cover_image = cover_images[0]
         return render(request, 'item/cover_image.html', {
             'cover_image': cover_image
             })
