@@ -3,16 +3,16 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <div class="mt-6 px-6 py-12 bg-gray-100 rounded-lg">
+    <div class="mt-6 px-6 py-12 bg-yellow-400 rounded-lg">
             <h2 class="mb-12 text-xl text-center">My (USER) Items</h2>
             
-            <div class="grid grid-cols-3 gap-3">
+            <div class="grid grid-cols-5 gap-5">
 
                 {% for item in items %}
                     <div>
                         <a href="{% url 'item:detail' item.id %}">
                             <div>
-                                <img src="{{ item.image.url }}" class="rounded-t-xl">
+                                <img src="{{ item.image.url }}" class="w-full h-64 object-cover rounded-t-xl">
                             </div>
 
                             <div class="p-6 bg-white rounded-b-xl">

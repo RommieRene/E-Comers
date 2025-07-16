@@ -16,49 +16,67 @@ def cover_image(request):
         return render(request, 'item/cover_image.html', {
             'cover_image': cover_image
             })
-    
+  
 def browse(request):
     query = request.GET.get('query', '')
-    category_id = request.GET.get('category', 0)
+    category_id = int(request.GET.get('category', 0))
     categories = Category.objects.all()
-    browse=Item.objects.filter(is_sold=False)
+    items = Item.objects.filter(is_sold=False)
 
     if category_id:
-        browse = browse.filter(category_id=category_id)
-        print("if_1 :",browse)
+        items = items.filter(category_id=category_id)
 
     if query:
-        browse = browse.filter(Q(name__icontains=query) | Q(descroption__icontains=query))
-        print("if_2",browse)
-    # return json.dumps({'items': browse,
-    #     'query': query,
-    #     'categories': categories,
-    #     'category_id': int(category_id)
-    # })
-    items_data = [{
-        'id': item.id,
-        'name': item.name,
-        'description': item.descroption,
-        'price': item.price,
-        'image': item.image.url if item.image else None,
-        'category': item.category.name,
-        'is_sold': item.is_sold,
-        'created_by': item.created_by.username,
-        'created_at': item.created_at.isoformat()
-    } for item in browse]
+        items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))  # Fixed typo
 
-    # Serialize categories
-    categories_data = [{
-        'id': cat.id,
-        'name': cat.name
-    } for cat in categories]
-
-    return JsonResponse({
-        'items': items_data,
+    return render(request, 'item/browse.html', {
+        'items': items,
         'query': query,
-        'categories': categories_data,
-        'category_id': int(category_id)
-    })
+        'categories': categories,
+        'category_id': category_id
+    })  
+# def browse(request):
+#     query = request.GET.get('query', '')
+#     category_id = request.GET.get('category', 0)
+#     categories = Category.objects.all()
+#     browse=Item.objects.filter(is_sold=False)
+
+#     if category_id:
+#         browse = browse.filter(category_id=category_id)
+#         print("if_1 :",browse)
+
+#     if query:
+#         browse = browse.filter(Q(name__icontains=query) | Q(descroption__icontains=query))
+#         print("if_2",browse)
+#     items_data = [{
+#         'id': item.id,
+#         'name': item.name,
+#         'description': item.descroption,
+#         'price': item.price,
+#         'image': item.image.url if item.image else None,
+#         'category': item.category.name,
+#         'is_sold': item.is_sold,
+#         'created_by': item.created_by.username,
+#         'created_at': item.created_at.isoformat()
+#     } for item in browse]
+
+#     # Serialize categories
+#     categories_data = [{
+#         'id': cat.id,
+#         'name': cat.name
+#     } for cat in categories]
+
+#     return render(request, 'item/browse.html', {
+#         'items': items,
+#         'query': query,
+#         'categories': categories,
+#         'category_id': category_id
+#     })
+# json.dumps({'items': browse,
+#         'query': query,
+#         'categories': categories,
+#         'category_id': int(category_id)
+#     })
 
 def detail(request, pk):
     
